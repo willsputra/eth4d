@@ -9,6 +9,7 @@ contract Lottery {
     Player[] public players;
     
     mapping(uint => address[]) recipientValue;
+    mapping(uint => uint) recipientValueCount;
 
     function Lottery() public {
         manager = msg.sender;
@@ -23,10 +24,22 @@ contract Lottery {
         players.push(newPlayer);
         
         recipientValue[msg.value].push(msg.sender);
+        recipientValueCount[msg.value]++;
     }
     
-    function winnerAddress(uint index) public view returns (address[]) {
-        return recipientValue[index];
+    
+    function pickWinner(uint index) public restricted {
+        address[] storage winners = recipientValue[index];
+        uint prize = this.balance / recipientValueCount[index];
+        
+        for(uint i=0; i< winners.length; i++){
+            winners[i].transfer(prize);
+        }
+        
+    } 
+    
+    function totalBalance() public view returns (uint) {
+        return this.balance;
     }
     
     

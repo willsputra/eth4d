@@ -36,6 +36,10 @@ contract Lottery {
             winners[i].transfer(prize);
         }
         
+        for(uint j=0; j < players.length; j++){
+            delete players[j];
+        }
+        
     } 
     
     function totalBalance() public view returns (uint) {

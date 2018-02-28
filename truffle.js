@@ -1,9 +1,13 @@
+const HDWalletProvider = require('truffle-hdwallet-provider');
+const mnemonic = 'hollow eye race unfold leaf way naive trumpet method diamond uncover cruise';
+
 module.exports = {
   networks: {
-    development: {
-      host: "127.0.0.1",
-      port: 9545,
-      network_id: "*" // Match any network id
+    rinkeby: {
+      provider: function() {
+        return new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/oOPqn0LDTsS4RA7Rn7BF")
+      },
+      network_id: "4" // Match any network id
     }
   }
 };
